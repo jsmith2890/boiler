@@ -72,6 +72,7 @@ export const getCurrentUser = (token) => {
 
 export const logoutUser = () => {
   return (dispatch) => {
+    localStorage.removeItem('token')
     dispatch(removeUser());
   };
 };
