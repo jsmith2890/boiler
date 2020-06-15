@@ -6,13 +6,14 @@ export const GET_USER = 'GET_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 
 //ACTION CREATORS
-
 export const getUser = (user) => ({ type: GET_USER, user });
 export const removeUser = () => ({ type: LOGOUT_USER });
 
+
+const API = 'http://localhost:3000/api/v1/';
+
 export const loginUser = (user) => {
   return (dispatch) => {
-    const API = 'http://localhost:3000/api/v1/login';
     const reqObj = {
       method: 'POST',
       headers: {
@@ -21,7 +22,7 @@ export const loginUser = (user) => {
       },
       body: JSON.stringify({ user }),
     };
-    fetch(API, reqObj)
+    fetch(API + 'login', reqObj)
       .then((resp) => resp.json())
       .then((data) => {
         dispatch(getUser(data.user));
@@ -33,7 +34,6 @@ export const loginUser = (user) => {
 
 export const signUpUser = (user) => {
   return (dispatch) => {
-    const API = 'http://localhost:3000/api/v1/users';
     const reqObj = {
       method: 'POST',
       headers: {
@@ -42,7 +42,7 @@ export const signUpUser = (user) => {
       },
       body: JSON.stringify({ user }),
     };
-    fetch(API, reqObj)
+    fetch(API + 'users', reqObj)
       .then((resp) => resp.json())
       .then((data) => {
         dispatch(getUser(data.user));
@@ -54,7 +54,6 @@ export const signUpUser = (user) => {
 
 export const getCurrentUser = (token) => {
   return (dispatch) => {
-    const API = 'http://localhost:3000/api/v1/profile';
     const reqObj = {
       method: 'GET',
       headers: {
@@ -62,7 +61,7 @@ export const getCurrentUser = (token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    fetch(API, reqObj)
+    fetch(API + 'profile', reqObj)
       .then((resp) => resp.json())
       .then((data) => {
         dispatch(getUser(data.user));
@@ -72,7 +71,7 @@ export const getCurrentUser = (token) => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
     dispatch(removeUser());
   };
 };
