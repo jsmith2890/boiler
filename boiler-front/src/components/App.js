@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCurrentUser } from '../actions/user';
+import { getCurrentUser, logoutUser } from '../actions/user';
 import Login from './Login';
 import SignUp from './SignUp';
 import HelloWorld from './HelloWorld';
@@ -23,13 +23,17 @@ class App extends Component {
           <Route path={'/signup'} component={SignUp} />
           <Route path={'/'} component={HelloWorld} />
         </Switch>
+        <button onClick={this.props.logout}>logout</button>
       </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return { getCurrentUser: (token) => dispatch(getCurrentUser(token)) };
+  return {
+    getCurrentUser: (token) => dispatch(getCurrentUser(token)),
+    logout: () => dispatch(logoutUser),
+  };
 };
 
 export default connect(null, mapDispatchToProps)(App);

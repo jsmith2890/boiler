@@ -9,7 +9,6 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const getUser = (user) => ({ type: GET_USER, user });
 export const removeUser = () => ({ type: LOGOUT_USER });
 
-
 const API = 'http://localhost:3000/api/v1/';
 
 export const loginUser = (user) => {
@@ -25,9 +24,14 @@ export const loginUser = (user) => {
     fetch(API + 'login', reqObj)
       .then((resp) => resp.json())
       .then((data) => {
-        dispatch(getUser(data.user));
-        localStorage.setItem('token', data.jwt);
-        history.push('/');
+        if (data.user) {
+          dispatch(getUser(data.user));
+          localStorage.setItem('token', data.jwt);
+          //whereever you want to go after logging in
+          history.push('/');
+        }
+        //however you want  to  handle the error
+        history.push('/login');
       });
   };
 };
@@ -45,9 +49,14 @@ export const signUpUser = (user) => {
     fetch(API + 'users', reqObj)
       .then((resp) => resp.json())
       .then((data) => {
-        dispatch(getUser(data.user));
-        localStorage.setItem('token', data.jwt);
-        history.push('/');
+        if (data.user) {
+          dispatch(getUser(data.user));
+          localStorage.setItem('token', data.jwt);
+          //whereever you want to go after logging in
+          history.push('/');
+        }
+        //however you want  to  handle the error
+        history.push('/signup');
       });
   };
 };
