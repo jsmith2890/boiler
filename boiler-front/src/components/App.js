@@ -32,7 +32,7 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     getCurrentUser: (token) => dispatch(getCurrentUser(token)),
-    logout: () => dispatch(logoutUser),
+    logout: () => dispatch(logoutUser()),
   };
 };
 
